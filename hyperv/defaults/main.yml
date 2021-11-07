@@ -2,8 +2,9 @@
 # defaults file for hyperv
 vmstate: present
 vmgeneration: 2
+vmcpu: 1
 vmmemory: 1024MB
 vmswitch: vSwitch
 vmpath: "V:\\ROOT\\HyperV\\"
-osdiskpath: "V:\\ROOT\\HyperV\\{{ vm_name }}\\'Virtual Hard Disks'\\{{ vm_name }}-OS.vhd"
+osdiskpath: "V:\\ROOT\\HyperV\\{{ vm_name }}\\'Virtual Hard Disks'"
 vmosvhdsize_bytes: 50GB

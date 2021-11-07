@@ -4,6 +4,7 @@
   when: 
     - vm_generation == 1
     - vm_state == 'present' or 'started'
+    - vm_state != 'absent'
   win_hyperv_guest:
     name: "{{ vm_name }}"
     state: present
@@ -11,15 +12,4 @@
     memory: "{{ vm_memory }}"
     network_switch: "{{ vm_switch }}"
     vmpath: "{{ vmpath }}"
-    osdiskpath: "{{ osdiskpath }}"
-
-- name: Set CPU
-  when: 
-    - vm_cpu is defined
-    - vm_generation == 1
-    - vm_state == 'present' or 'started'
-  win_shell: |
-    $cpucount = (Get-VMProcessor -VMName {{ vm_name }}).Count
-    if ($cpucount -ne {{ vm_cpu }}) {
-      Set-VM -Name {{ vm_name }} -ProcessorCount {{ vm_cpu }}
-    }
+    osdiskpath: "{{ osdiskpath }}\\{{ vm_name }}-OS.vhd"

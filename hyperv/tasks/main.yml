@@ -4,11 +4,27 @@
   when:
     - vm_generation == 1
     - vm_state == 'present' or 'started'
-  notify: Power On Vm
 
 - name: Create Gen2 Machine
   import_tasks: create_gen2_vm.yml
   when: 
     - vm_generation == 2
     - vm_state == 'present' or 'started'
+
+- name: Setting CPU as needed
+  when: 
+    - vm_state != 'absent'
+  notify: Set CPU
+  set_fact:
+    vm_cpu: "{{ vm_cpu | int }}"
+
+- name: Power On as needed
+  when: vm_state == 'started'
   notify: Power On Vm
+  debug:
+    msg: "VM Started"
+
+- name: Destroy as needed
+  import_tasks: delete_vm.yml
+  when: 
+    - vm_state == 'absent'

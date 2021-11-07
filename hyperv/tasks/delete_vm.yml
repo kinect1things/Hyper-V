@@ -1,0 +1,7 @@
+---
+- name: Destroy as needed
+  when: vm_state == 'absent'
+  win_hyperv_guest:
+    name: "{{ vm_name }}"
+    state: absent
+  notify: Remove VM Dir
