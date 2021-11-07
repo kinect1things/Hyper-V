@@ -18,9 +18,9 @@ Role Variables
 --------------
 
 Defaults
-Generation: 2
-Path: V:\ROOT\HyperV\
-Memory: 1024MB
+- Generation: 2
+- Path: V:\ROOT\HyperV\
+- Memory: 1024MB
 
 Dependencies
 ------------
