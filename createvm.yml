@@ -4,8 +4,8 @@
       import_role:
         name: hyperv
       vars:
-        vmstate: absent
+        vmstate: started
         vmname: dc1
         # vmgeneration: 2
         # vmcpu: 2
-        # vmmemory: 1024MB
+        # vmmemory: 2048MB

@@ -1,23 +1,12 @@
 ---
 # handlers file for hyperv
-- name: Set CPU
-  when: 
-    - vm_cpu is defined
-    - vm_state == 'present' or 'started'
-  win_shell: |
-    $cpucount = (Get-VMProcessor -VMName {{ vm_name }}).Count
-    if ($cpucount -ne {{ vm_cpu }}) {
-      Set-VM -Name {{ vm_name }} -ProcessorCount {{ vm_cpu }}
-    } else { $Ansible.Changed = $false }
-
-- name: Power On Vm
+- name: PowerOnVm
   when: vm_state == 'started'
   win_hyperv_guest:
     name: "{{ vm_name }}"
     state: started
-
-- name: Remove VM Dir
-  when: vm_state == 'absent'
+    
+- name: Remove Vm Directory
   win_file:
     path: "{{ vmpath }}\\{{ vm_name }}"
     state: absent

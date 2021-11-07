@@ -1,0 +1,5 @@
+---
+- name: Power On as needed
+  win_hyperv_guest:
+    name: "{{ vm_name }}"
+    state: started

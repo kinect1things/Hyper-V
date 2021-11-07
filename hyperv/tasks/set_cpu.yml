@@ -1,0 +1,8 @@
+---
+- name: Set Vm Cpu
+  when: 
+    - vm_state == 'present' or 'started'
+  win_shell: |
+    Set-VM -Name {{ vm_name }} -ProcessorCount {{ vm_cpu }}
+    
+      
