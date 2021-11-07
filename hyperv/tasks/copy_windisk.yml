@@ -1,0 +1,28 @@
+---
+- name: Prep Vm Directory
+  when: vm_osdiskpath is defined
+  win_file:
+    path: "{{ vm_osdiskpath }}"
+    state: directory
+
+- name: Copy Windows 2022 OS Gen1 Template
+  vars:
+    vm_osdiskname: "{{ vm_name }}-OS.vhd"
+  win_copy:
+    src: "{{ vmpath }}\\Template\\Virtual Hard Disks\\win2022.vhd"
+    dest: "{{ vm_osdiskpath }}\\{{ vm_osdiskname }}"
+    remote_src: yes
+  when:
+    - vm_os == 'Windows2022'
+    - vm_generation == 1
+
+- name: Copy Windows 2022 OS Gen2 Template
+  vars:
+    vm_osdiskname: "{{ vm_name }}-OS.vhdx"
+  win_copy:
+    src: "{{ vmpath }}\\Template\\Virtual Hard Disks\\win2022.vhdx"
+    dest: "{{ vm_osdiskpath }}\\{{ vm_osdiskname }}"
+    remote_src: yes
+  when:
+    - vm_os == 'Windows2022'
+    - vm_generation == 2

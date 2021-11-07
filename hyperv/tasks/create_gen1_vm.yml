@@ -1,6 +1,8 @@
 ---
 # tasks file for hyperv
 - name: Create Gen1 VM
+  vars:
+    vm_osdiskname: "{{ vm_name }}-OS.vhd"
   when: 
     - vm_generation == 1
     - vm_state == 'present' or 'started'
@@ -12,4 +14,4 @@
     memory: "{{ vm_memory }}"
     network_switch: "{{ vm_switch }}"
     vmpath: "{{ vmpath }}"
-    osdiskpath: "{{ osdiskpath }}\\{{ vm_name }}-OS.vhd"
+    osdiskpath: "{{ vm_osdiskpath }}\\{{ vm_osdiskname }}"

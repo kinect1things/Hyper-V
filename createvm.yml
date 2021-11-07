@@ -5,7 +5,8 @@
         name: hyperv
       vars:
         vmstate: started
-        vmname: dc1
+        vmname: DC1
+        vm_os: 'Windows2022'
         # vmgeneration: 2
         # vmcpu: 2
         # vmmemory: 2048MB

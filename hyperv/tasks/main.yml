@@ -1,25 +1,30 @@
 ---
+- name: Prepare Disk
+  include: copy_windisk.yml
+  when:
+    - vm_os == 'Windows2022'
+
 - name: Create Gen1 Machine
-  import_tasks: create_gen1_vm.yml
+  include: create_gen1_vm.yml
   when:
     - vm_generation == 1
     - vm_state == 'present' or 'started'
 
 - name: Create Gen2 Machine
-  import_tasks: create_gen2_vm.yml
+  include: create_gen2_vm.yml
   when: 
     - vm_generation == 2
     - vm_state == 'present' or 'started'
 
 - name: Setting CPU as needed
+  include: set_cpu.yml
   when: 
     - vm_state != 'absent'
-  import_tasks: set_cpu.yml
 
 - name: Power on as needed
-  import_tasks: poweron_vm.yml
+  include: poweron_vm.yml
   when: vm_state == 'started'
 
 - name: Destroy as needed
-  import_tasks: delete_vm.yml
+  include: delete_vm.yml
   when: vm_state == 'absent'

@@ -1,5 +1,5 @@
 .gitignore
-hosts.yml
+inventory
 creds/
 group_vars/
 .cred
