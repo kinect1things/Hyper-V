@@ -1,3 +1,4 @@
+.gitignore
 hosts.yml
 creds/
 group_vars/
