@@ -1,0 +1,8 @@
+---
+- name: Create Gen1 Machine
+  import_tasks: create_gen1_vm.yml
+  when: vm_generation == 1
+
+- name: Create Gen2 Machine
+  import_tasks: create_gen2_vm.yml
+  when: vm_generation == 2

@@ -1,0 +1,4 @@
+hosts.yml
+creds/
+group_vars/
+.cred

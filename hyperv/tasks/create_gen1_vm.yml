@@ -1,0 +1,11 @@
+---
+# tasks file for hyperv
+- name: Create VM
+  win_hyperv_guest:
+    name: "{{ vm_name }}"
+    state: "{{ vm_state }}"
+    generation: "{{ vm_generation }}"
+    memory: "{{ vm_memory }}"
+    network_switch: "{{ vm_switch }}"
+    vmpath: "{{ vmpath }}"
+    osdiskpath: "{{ osdiskpath }}"

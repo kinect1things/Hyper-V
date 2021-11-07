@@ -1,0 +1,10 @@
+- hosts: hyperv
+  tasks:
+    - name: Create a VM
+      import_role:
+        name: hyperv
+      vars:
+        vmstate: present
+        vmname: dc1
+        vmgeneration: 2
+        vmmemory: 1024MB

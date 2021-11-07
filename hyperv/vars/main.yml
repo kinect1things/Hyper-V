@@ -1,0 +1,8 @@
+---
+# vars file for hyperv
+vm_name: "{{ vmname | upper }}"
+vm_state: "{{ vmstate }}"
+vm_memory: "{{ vmmemory }}"
+vm_generation: "{{ vmgeneration }}"
+vm_switch: "{{ vmswitch }}"
+vm_osvhdsize_bytes: "{{ vmosvhdsize_bytes }}"
