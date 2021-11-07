@@ -1,10 +1,12 @@
 ---
 # tasks file for hyperv
 - name: Create Gen2 VM
-  when: vm_generation == 2
+  when: 
+    - vm_generation == 2
+    - vm_state == 'present' or 'started'
   win_hyperv_guest:
     name: "{{ vm_name }}"
-    state: "{{ vm_state }}"
+    state: present
     generation: "{{ vm_generation }}"
     memory: "{{ vm_memory }}"
     network_switch: "{{ vm_switch }}"
@@ -12,7 +14,10 @@
     osdiskpath: "{{ osdiskpath }}\\{{vm_name}}-OS.vhdx"
 
 - name: Set CPU
-  when: vm_cpu is defined
+  when: 
+    - vm_cpu is defined
+    - vm_generation == 2
+    - vm_state == 'present' or 'started'
   win_shell: |
     $cpucount = (Get-VMProcessor -VMName {{ vm_name }}).Count
     if ($cpucount -ne {{ vm_cpu }}) {

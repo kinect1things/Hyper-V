@@ -1,8 +1,14 @@
 ---
 - name: Create Gen1 Machine
   import_tasks: create_gen1_vm.yml
-  when: vm_generation == 1
+  when:
+    - vm_generation == 1
+    - vm_state == 'present' or 'started'
+  notify: Power On Vm
 
 - name: Create Gen2 Machine
   import_tasks: create_gen2_vm.yml
-  when: vm_generation == 2
+  when: 
+    - vm_generation == 2
+    - vm_state == 'present' or 'started'
+  notify: Power On Vm

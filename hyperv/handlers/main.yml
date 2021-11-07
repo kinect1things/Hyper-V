@@ -1,2 +1,6 @@
 ---
 # handlers file for hyperv
+- name: Power On Vm
+  win_hyperv_guest:
+    name: "{{ vm_name }}"
+    state: started

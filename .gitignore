@@ -3,3 +3,5 @@ hosts.yml
 creds/
 group_vars/
 .cred
+createvm.yml
+createwin.yml

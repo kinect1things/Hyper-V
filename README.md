@@ -5,7 +5,7 @@ hyperv
 
 This role is used to create, destroy, stop, and start a Hyper-V virtual machines. It was created following glenndehaan's source.
 
-  ![glenndehaan](https://github.com/glenndehaan/ansible-win_hyperv_guest)
+  ![glenndehaan's github](https://github.com/glenndehaan/ansible-win_hyperv_guest)
 
 Requirements
 ------------
@@ -18,9 +18,16 @@ Role Variables
 --------------
 
 Defaults
+- State: Started
 - Generation: 2
 - Path: V:\ROOT\HyperV\
 - Memory: 1024MB
+
+Power Options
+- present
+- absent
+- started
+- stopped
 
 Dependencies
 ------------
@@ -30,7 +37,6 @@ Dependencies
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
 ```yaml
 - hosts: hyperv
   tasks:
@@ -41,8 +47,10 @@ Including an example of how to use your role (for instance, with variables passe
         vmname: test
         vmstate: present
         vmgeneration: 2
+        vmcpu: 2
         vmmemory: 1024MB
 ```
+
 License
 -------
 
