@@ -38,8 +38,8 @@ options:
     choices:
       - present
       - absent
-	  - started
-	  - stopped
+	    - started
+	    - stopped
     default: present
   memory:
     description:
@@ -64,7 +64,7 @@ options:
   diskpath:
     description:
       - Specify path of VHD/VHDX file for VM
-	  - If the file exists it will be attached, if not then a new one will be created
+	    - If the file exists it will be attached, if not then a new one will be created
     require: false
     default: null
 '''
@@ -73,20 +73,24 @@ EXAMPLES = '''
   # Create VM
   win_hyperv_guest:
     name: Test
+
   # Delete a VM
   win_hyperv_guest:
     name: Test
-	state: absent
+	  state: absent
+
   # Create VM with 256MB memory
   win_hyperv_guest:
     name: Test
-	memory: 256MB
-  # Create generation 1 VM with 256MB memory and a network adapter
+	  memory: 256MB
+
+  # Create generation 1 VM with 256MB memory and a network adapter in specified location
   win_hyperv_guest:
     name: Test
     generation: 1
     memory: 256MB
     network_switch: WAN1
+    osdiskpath: "E:\\Hyper-V\\"
 '''
 
 ANSIBLE_METADATA = {
