@@ -31,7 +31,7 @@ Example Playbook
 ----------------
 
 Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
-
+```yaml
 - hosts: hyperv
   tasks:
     - name: Create a VM
@@ -42,7 +42,7 @@ Including an example of how to use your role (for instance, with variables passe
         vmstate: present
         vmgeneration: 2
         vmmemory: 1024MB
-
+```
 License
 -------
 
