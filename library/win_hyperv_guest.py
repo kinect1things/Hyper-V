@@ -88,6 +88,7 @@ EXAMPLES = '''
   win_hyperv_guest:
     name: Test
     generation: 1
+    cpu: 1
     memory: 256MB
     network_switch: WAN1
     osdiskpath: "E:\\Hyper-V\\"

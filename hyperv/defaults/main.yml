@@ -6,4 +6,4 @@ vmmemory: 1024MB
 vmswitch: vSwitch
 vmpath: "V:\\ROOT\\HyperV\\"
 osdiskpath: "V:\\ROOT\\HyperV\\{{ vm_name }}\\'Virtual Hard Disks'\\{{ vm_name }}-OS.vhd"
-vmosvhdsize_bytes: 50000000000 #50G
+vmosvhdsize_bytes: 50GB

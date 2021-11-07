@@ -5,6 +5,7 @@
         name: hyperv
       vars:
         vmstate: present
-        vmname: dc1
+        vmname: dc2
         vmgeneration: 2
+        vmcpu: 2
         vmmemory: 1024MB

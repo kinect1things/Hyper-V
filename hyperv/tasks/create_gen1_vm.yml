@@ -1,6 +1,7 @@
 ---
 # tasks file for hyperv
-- name: Create VM
+- name: Create Gen1 VM
+  when: vm_generation == 1
   win_hyperv_guest:
     name: "{{ vm_name }}"
     state: "{{ vm_state }}"
@@ -9,3 +10,15 @@
     network_switch: "{{ vm_switch }}"
     vmpath: "{{ vmpath }}"
     osdiskpath: "{{ osdiskpath }}"
+
+- name: Set CPU
+  when: vm_cpu is defined
+  win_shell: |
+    $cpucount = (Get-VMProcessor -VMName {{ vm_name }}).Count
+    if ($cpucount -ne {{ vm_cpu }}) {
+      Set-VM -Name {{ vm_name }} -ProcessorCount {{ vm_cpu }}
+    } 
+    else {
+      $Ansible.Changed = $false 
+    }
+  
