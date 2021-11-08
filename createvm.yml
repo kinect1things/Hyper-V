@@ -1,3 +1,4 @@
+---
 - hosts: hyperv
   tasks:
     - name: Create a VM
@@ -5,8 +6,38 @@
         name: hyperv
       vars:
         vmstate: started
-        vmname: DC1
+        vmname: DC9
         vm_os: 'Windows2022'
-        # vmgeneration: 2
-        # vmcpu: 2
-        # vmmemory: 2048MB
+
+    - name: Wait 90 seconds, but only start checking after 60 seconds
+      wait_for_connection:
+        delay: 60
+        timeout: 90
+
+    - name: Get VM IP
+      win_shell: (get-vm -name {{ vm_name }}).NetworkAdapters[0].IPAddresses[0]
+      register: vmip
+
+    - name: VM IP
+      debug:
+        var: vmip.stdout_lines[0]
+
+    - set_fact:
+        vm_ip: "{{ vmip.stdout_lines[0] }}"
+    - name: get ansible host inventory
+      add_host:
+        hostname: "{{ vm_ip }}"
+        group: ad_dc
+
+    - name: Prep for ansible
+      win_shell: |
+        $userName = [string]$userName = "{{ ansible_user }}"
+        $securePwd = ConvertTo-SecureString -AsPlainText -Force -String "{{ ansible_password }}"
+        $credObject = New-Object System.Management.Automation.PSCredential -ArgumentList $userName, $securePwd
+        Invoke-Command -VMName {{ vm_name }} -Credential $credObject -ScriptBlock {
+          [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+          $url = "https://raw.githubusercontent.com/ansible/ansible/devel/examples/scripts/ConfigureRemotingForAnsible.ps1"
+          $file = "$env:temp\ConfigureRemotingForAnsible.ps1"
+          (New-Object -TypeName System.Net.WebClient).DownloadFile($url, $file)
+          powershell.exe -ExecutionPolicy ByPass -File $file
+        }

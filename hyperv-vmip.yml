@@ -1,0 +1,15 @@
+---
+- hosts: hyperv
+  vars_files:
+    - "../group_vars/win_common.yml"
+  tasks:
+    - name: Get VM IP
+      win_shell: (get-vm -name {{ vm_name }}).NetworkAdapters[0].IPAddresses[0]
+      register: vm_ip
+
+    - set_fact:
+        vm_ip: "{{ vm_ip.stdout_lines[0] }}"
+    - name: get ansible host inventory
+      add_host:
+        hostname: "{{ vm_ip }}"
+        group: ad_dc  

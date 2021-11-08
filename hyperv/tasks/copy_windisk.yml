@@ -5,24 +5,46 @@
     path: "{{ vm_osdiskpath }}"
     state: directory
 
+- name: Check if VHD exists
+  vars:
+    vm_osdiskname: "{{ vm_name }}-OS.vhd"
+  win_stat:
+    path: "{{ vm_osdiskpath }}\\{{ vm_osdiskname }}"
+  register: vhdfile
+  when: 
+    - vm_os == 'Windows2022'
+    - vm_generation == 1
+
+- name: Check if VHD exists
+  vars:
+    vm_osdiskname: "{{ vm_name }}-OS.vhdx"
+  win_stat:
+    path: "{{ vm_osdiskpath }}\\{{ vm_osdiskname }}"
+  register: vhdfile
+  when: 
+    - vm_os == 'Windows2022'
+    - vm_generation == 2
+
 - name: Copy Windows 2022 OS Gen1 Template
   vars:
     vm_osdiskname: "{{ vm_name }}-OS.vhd"
   win_copy:
-    src: "{{ vmpath }}\\Template\\Virtual Hard Disks\\win2022.vhd"
+    src: "{{ vmpath }}\\Template\\VHDs\\win2022.vhd"
     dest: "{{ vm_osdiskpath }}\\{{ vm_osdiskname }}"
     remote_src: yes
   when:
     - vm_os == 'Windows2022'
     - vm_generation == 1
+    - vhdfile.stat.exists == false
 
 - name: Copy Windows 2022 OS Gen2 Template
   vars:
     vm_osdiskname: "{{ vm_name }}-OS.vhdx"
   win_copy:
-    src: "{{ vmpath }}\\Template\\Virtual Hard Disks\\win2022.vhdx"
+    src: "{{ vmpath }}\\Template\\VHDs\\win2022.vhdx"
     dest: "{{ vm_osdiskpath }}\\{{ vm_osdiskname }}"
     remote_src: yes
   when:
     - vm_os == 'Windows2022'
     - vm_generation == 2
+    - vhdfile.stat.exists == false
